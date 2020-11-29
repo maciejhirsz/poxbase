@@ -344,7 +344,7 @@ async fn main() -> anyhow::Result<()> {
     SimpleLogger::new().with_level(log::LevelFilter::Info).init().expect("Must be able to start a logger");
 
     let opts: Opts = Opts::parse();
-    let interval = Duration::from_millis(5000);
+    let interval = Duration::from_secs(3600 * 6);
 
     let mut prev_hash = None;
     let mut server: Option<BackgroundServer> = None;
