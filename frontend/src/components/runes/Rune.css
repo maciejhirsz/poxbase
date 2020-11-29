@@ -1,0 +1,289 @@
+.Rune {
+  position: relative;
+  cursor: pointer;
+  width: 330px;
+  height: 416px;
+  margin-bottom: 20px;
+  border: 1px dashed #ddd;
+  border-radius: 15px;
+}
+
+.Rune-card {
+  display: block;
+  margin: -1px 0 0 -1px;
+  position: absolute;
+  width: 332px;
+  height: 418px;
+  background: #0c0b0b;
+  border-radius: 15px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.65), inset 0px 2px 3px rgba(255, 255, 255, 0.40), inset 0px -2px 3px rgba(0, 0, 0, 0.40);
+  backface-visibility: hidden;
+  text-align: center;
+  transition: transform 0.4s ease-in-out, z-index 0.4s linear;
+}
+
+.Rune-card .Spinner {
+  position: absolute;
+  font-size: 24px;
+  left: 136px;
+  top: 177px;
+  margin: 0;
+}
+
+/* unhovered flip */
+.Rune-card-front {
+  z-index: 2;
+  transform: perspective(900px) scale(0.9) rotateX(15deg) rotateY(0deg) translate(0,-10px);
+}
+.Rune-card-reverse {
+  z-index: 1;
+  transform: perspective(900px) scale(0.9) rotateX(15deg) rotateY(180deg) translate(0,-10px);
+}
+.Rune-flip .Rune-card-front {
+  z-index: 1;
+  transform: perspective(900px) scale(0.9) rotateX(15deg) rotateY(-180deg) translate(0,-10px);
+}
+.Rune-flip .Rune-card-reverse {
+  z-index: 2;
+  transform: perspective(900px) scale(0.9) rotateX(15deg) rotateY(0deg) translate(0,-10px);
+}
+
+/* hovered flip */
+.Rune:hover .Rune-card-front {
+  transform: perspective(900px) scale(1) rotateX(0deg) rotateY(0deg);
+}
+.Rune:hover .Rune-card-reverse {
+  transform: perspective(900px) scale(1) rotateX(0deg) rotateY(180deg);
+}
+.Rune-flip:hover .Rune-card-front {
+  transform: perspective(900px) scale(1) rotateX(0deg) rotateY(-180deg);
+}
+.Rune-flip:hover .Rune-card-reverse {
+  transform: perspective(900px) scale(1) rotateX(0deg) rotateY(0deg);
+}
+
+.Rune-card img, .Rune-card div {
+  position: absolute;
+  color: #fff;
+}
+
+.Rune-frame, .Rune-rarity {
+  left: 1px;
+  top: -2px;
+  z-index: 2;
+}
+
+.Rune-faction-icon {
+  left: 41px;
+  top: 32px;
+  z-index: 3;
+}
+
+.Rune-stats {
+  left: 1px;
+  top: 343px;
+  z-index: 2;
+  width: 332px;
+  height: 33px;
+  background: url('../../img/frame/stats.png') no-repeat;
+}
+
+.Rune-picture {
+  left: 32px;
+  top: 45px;
+  z-index: 1;
+}
+
+.Rune-label {
+  z-index: 3;
+  top: 34px;
+  left: 46px;
+  width: 240px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 17px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 2px 1px #000;
+}
+
+.Rune-nora {
+  z-index: 3;
+  top: 19px;
+  left: 273px;
+  width: 42px;
+  padding-top: 10px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 2px 1px #000;
+}
+
+.Rune-nora-hidden {
+  opacity: 0;
+}
+
+.Rune .Rune-level {
+  z-index: 3;
+  top: 8px;
+  left: 267px;
+  width: 57px;
+  height: 37px;
+  padding-top: 20px;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #000;
+  line-height: 17px;
+  background: url('../../img/frame/star.png') no-repeat;
+}
+
+.Rune-stat {
+  z-index: 3;
+  top: 343px;
+  left: 41px;
+  width: 46px;
+  height: 12px;
+  line-height: 12px;
+  padding-top: 38px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+.Rune-spd { left: 92px; }
+.Rune-rng { left: 143px; }
+.Rune-def { left: 194px; }
+.Rune-hp { left: 245px; }
+
+.Rune-fluff, .Rune-description {
+  z-index: 3;
+  top: 61px;
+  left: 35px;
+  width: 262px;
+  height: 65px;
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  line-height: 11px;
+}
+
+.Rune-description a {
+  font-weight: bold;
+  color: #fff;
+}
+
+.Rune-description {
+  top: 136px;
+  left: 36px;
+  width: 255px;
+  height: 125px;
+}
+
+.Rune-abilities {
+  width: 270px;
+  height: 144px;
+  left: 31px;
+  top: 128px;
+  z-index: 3;
+}
+
+.Rune-card .Rune-abilities-col-1, .Rune-card .Rune-abilities-col-2 {
+  position: static;
+  width: 129px;
+  float: left;
+  margin-left: 6px;
+}
+
+.Rune-card .Rune-ab {
+  position: relative;
+  left: auto;
+  top: auto;
+  display: flex;
+  width: 124px;
+  height: 30px;
+  margin: 4px 0;
+  align-items: center;
+}
+
+/*.Rune-card .Rune-ab img {
+  position: static;
+  width: 28px;
+  height: 27px;
+  margin: 0 2px 0 1px;
+}*/
+
+.Rune-card .Rune-ab-icon {
+  position: static;
+  width: 28px;
+  min-width: 28px;
+  height: 27px;
+  margin: 0 2px 0 1px;
+  background-repeat: no-repeat;
+  background-position: -4px -4px;
+  background-size: 36px 36px;
+}
+
+.Rune-card .Rune-ab img.Rune-ability-border {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 1;
+  margin: 0;
+}
+
+.Rune-card .Rune-ab span {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 10px;
+  line-height: 10px;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.Rune-idol {
+  z-index: 2;
+  left: 143px;
+  top: 241px;
+  width: 160px;
+  height: 150px;
+}
+
+.Rune-idol-wrapper {
+  position: absolute;
+  width: 160px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.Rune-idol img {
+  position: static;
+  left: auto;
+  top: auto;
+  margin: 0 auto;
+}
+
+.Rune-back-props {
+  z-index: 3;
+  left: 46px;
+  top: 293px;
+  line-height: 12px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  width: 100px;
+  text-align: left;
+}
+
+.Rune-back-props p {
+  padding: 0;
+  margin: 0;
+}
+
+.Rune-back-props span {
+  color: #c3db65;
+}

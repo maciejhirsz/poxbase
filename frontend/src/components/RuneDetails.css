@@ -1,0 +1,33 @@
+.RuneDetails a {
+  color: #0463f9;
+}
+
+.RuneDetails-block {
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-bottom-width: 0;
+  background: #f8f8f8;
+  padding: 8px 15px;
+}
+
+.RuneDetails-block:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.RuneDetails-block:last-child {
+  border-bottom-width: 1px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.RuneDetails-row {
+  padding: 4px 0;
+}
+
+.RuneDetails-label {
+  width: 90px;
+  display: inline-block;
+  font-weight: bold;
+  color: #888;
+}

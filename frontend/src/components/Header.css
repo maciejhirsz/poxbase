@@ -1,0 +1,61 @@
+.Header {
+  width: 100%;
+  font-size: 14px;
+}
+
+.Header-home {
+  text-align: center;
+  font-size: 16px;
+  margin: auto 0;
+}
+
+.Header-page {
+  position: relative;
+}
+
+.Header-logo {
+  width: 380px;
+  height: auto;
+}
+
+.Header-page .Header-logo {
+  width: 280px;
+}
+
+.Header-page .Header-toolbar {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.Header-nav {
+  margin-right: auto;
+}
+
+.Header-nav > * {
+  margin-right: 5px;
+}
+
+.Header-nav > :last-child {
+  margin-right: 0;
+}
+
+.Header-search {
+  display: flex;
+  width: 350px;
+}
+
+.Header-search-icon {
+  display: inline-block;
+  transform: scale(1.25);
+  line-height: 1;
+}
+
+.Header-search input {
+  flex-grow: 1;
+}
+
+.Header-home .Header-search {
+  font-size: 18px;
+  width: 500px;
+  margin: 0 auto 15px;
+}

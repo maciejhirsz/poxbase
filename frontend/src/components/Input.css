@@ -1,0 +1,32 @@
+.Input {
+  display: inline-block;
+  outline: none;
+  border: none;
+  font-size: inherit;
+  padding: 0.3em 0.7em;
+  border-radius: 0.2em;
+  line-height: 1.5;
+  color: #888;
+  border: 1px solid #ddd;
+  transition:
+    color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.Input-append {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.Input-prepend {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.Input:focus {
+  color: #000;
+  border-color: #348ff8;
+  box-shadow: 0 0 0 0.2em rgba(52,143,248,.35);
+}

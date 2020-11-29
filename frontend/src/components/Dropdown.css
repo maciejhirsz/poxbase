@@ -1,0 +1,56 @@
+.Dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.Dropdown-menu {
+  display: none;
+  flex-flow: row nowrap;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 100%;
+  margin-top: 2px;
+  background: #fff;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 13px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+
+.Dropdown-column {
+  flex-grow: 1;
+  padding: 10px 0;
+  min-width: 140px;
+  border-right: 1px solid #ddd;
+}
+
+.Dropdown-column:last-child {
+  border-right: none;
+}
+
+.Dropdown-column > a {
+  padding: 5px 13px;
+  display: block;
+  color: #000;
+  white-space: nowrap;
+}
+
+.Dropdown-column > a:hover {
+  background: #eee;
+}
+
+.Dropdown-column > a:active, .Dropdown-column > a.active {
+  background: #0463f9;
+  color: #fff;
+}
+
+.Dropdown-column > hr {
+  display: block;
+  height: 1px;
+  margin: 10px 0;
+  padding: 0;
+  border: none;
+  background: #ddd;
+}

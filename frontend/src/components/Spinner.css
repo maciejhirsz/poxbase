@@ -1,0 +1,21 @@
+.Spinner {
+  display: inline-block;
+  border-radius: 50%;
+  width: 0.8em;
+  height: 0.8em;
+  font-size: inherit;
+  position: relative;
+  text-indent: -9999em;
+  border: 0.1em solid rgba(153,153,153,0.2);
+  border-bottom-color: #999;
+  animation: spin 1.1s infinite linear;
+  margin: auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

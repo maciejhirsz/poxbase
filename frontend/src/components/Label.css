@@ -1,0 +1,23 @@
+.Label {
+  padding: 2px 5px 3px;
+  margin-top: -1px;
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+  background: #999;
+  border-radius: 3px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  margin-left: 2px;
+}
+
+.Label-float {
+  float: right;
+}
+
+.Label-nora { background: #2452a1; }
+.Label-0 { background: #b69926; }
+.Label-1 { background: #9e0c10; }
+.Label-2 { background: #0183b9; }
+.Label-3 { background: #8800b8; }
+.Label-4 { background: #b1b1b1; }
+.Label-5 { background: #45981f; }

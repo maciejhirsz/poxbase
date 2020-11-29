@@ -1,0 +1,84 @@
+.AbilityTable {
+  margin: 4px 0 20px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.AbilityTable-rank {
+  background-color: #0463f9;
+  color: #fff;
+  border-radius: 1em;
+  font-size: 11px;
+  padding: 0.1em 0.4em 0.15em;
+}
+
+.AbilityTable-row {
+  position: relative;
+  display: flex;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-bottom-width: 0;
+  transition:
+    border-color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.AbilityTable-row > div {
+  flex-grow: 1;
+  padding: 6px;
+}
+
+.AbilityTable-row:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.AbilityTable-row:last-child {
+  border-bottom: 1px solid #ddd;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.AbilityTable-row:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+.AbilityTable-row-selectable {
+  cursor: pointer;
+}
+
+.AbilityTable-row-selectable:hover {
+  background-color: #eee;
+}
+
+.AbilityTable-row-selected {
+  z-index: 1;
+  box-shadow: 0 0 0 2px rgba(248, 190, 52, 0.5);
+  background: #fffbee !important;
+  border: 1px solid #eaa55d !important;
+  margin-bottom: -1px;
+}
+.AbilityTable-row-selected:last-child {
+  margin-bottom: 0;
+}
+
+.AbilityTable-row > .AbilityTable-icon {
+  flex-grow: 0;
+  border-right: 1px solid #ddd;
+}
+
+.AbilityTable a {
+  color: #000;
+  font-weight: bold;
+}
+
+.AbilityTable .AbilityTable-name {
+  color: #0463f9;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.AbilityTable p {
+  margin: 8px 0 0;
+}

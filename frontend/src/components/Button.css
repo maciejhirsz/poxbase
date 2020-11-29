@@ -1,0 +1,54 @@
+.Button {
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  border: none;
+  font-size: inherit;
+  padding: 0.3em 0.7em;
+  border-radius: 0.2em;
+  background: #373737;
+  color: #fff;
+  line-height: 1.5;
+  transition:
+    color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+
+.Button-append {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.Button-prepend {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.Button:focus {
+  box-shadow: 0 0 0 0.2em rgba(55,55,55,.35);
+}
+
+.Button:focus, .Button:hover {
+  background: #222;
+}
+
+.Button:active {
+  background: #000;
+}
+
+.Button-primary {
+  background: #0463f9;
+}
+
+.Button-primary:focus {
+  box-shadow: 0 0 0 0.2em rgba(52,143,248,.35);
+}
+
+.Button-primary:focus, .Button-primary:hover {
+  background: #0348b4;
+}
+
+.Button-primary:active {
+  background: #02378b;
+}
