@@ -14,29 +14,36 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-use std::thread;
-use std::sync::mpsc;
-use std::time::Duration;
 use std::net::SocketAddr;
+use std::sync::mpsc;
+use std::thread;
+use std::time::Duration;
 
-use actix_web::{web, dev, middleware, get, App, Error, HttpResponse, HttpServer, rt::System, rt::time};
 use actix_web::web::{Data, Path};
-use clap::Clap;
-use futures::{pin_mut, future::{select, Either}};
-use simple_logger::SimpleLogger;
+use actix_web::{
+    dev, get, middleware, rt::time, rt::System, web, App, Error, HttpResponse, HttpServer,
+};
+use clap::Parser;
+use futures::{
+    future::{select, Either},
+    pin_mut,
+};
 use serde::Serialize;
+use simple_logger::SimpleLogger;
 
-mod db;
-mod types;
-mod parser;
 mod assets;
+mod db;
 mod error;
+mod parser;
+mod types;
 
-use crate::types::{Id, EntityId, Ability, AbilityGroup, Rune, Champion, Spell, Equip, Relic, Shim, Rarity, Effect};
+use crate::db::{SearchId, Searchable, DB};
 use crate::error::NotFound;
-use crate::db::{DB, SearchId, Searchable};
+use crate::types::{
+    Ability, AbilityGroup, Champion, Effect, EntityId, Equip, Id, Rarity, Relic, Rune, Shim, Spell,
+};
 
-#[derive(Clap)]
+#[derive(Parser)]
 #[clap(
     name = "PoxBase",
     version = env!("CARGO_PKG_VERSION"),
@@ -48,27 +55,19 @@ use crate::db::{DB, SearchId, Searchable};
         under certain conditions; see LICENSE for details.",
 )]
 struct Opts {
-    #[clap(
-        short = 'l',
-        long = "listen",
-        default_value = "127.0.0.1:8000",
-        about = "This is the socket the server is listening on. This is restricted localhost (127.0.0.1) by default and should be fine for most use cases. In a container, you likely want to set this to '0.0.0.0:8000'."
-    )]
+    /// This is the socket the server is listening on. This is restricted localhost (127.0.0.1) by default and should
+    /// be fine for most use cases. In a container, you likely want to set this to '0.0.0.0:8000'.
+    #[clap(long = "listen", default_value = "127.0.0.1:8000")]
     socket: SocketAddr,
-    #[clap(
-        short = 'n',
-        long = "no-assets",
-        about = "Don't verify whether all assets have been downloaded"
-    )]
+    /// Don't verify whether all assets have been downloaded
+    #[clap(long = "no-assets")]
     no_assets: bool,
 }
 
 fn json<S: Serialize>(ser: &S) -> Result<HttpResponse, Error> {
-    Ok(
-        HttpResponse::Ok()
-            .content_type("application/json")
-            .body(serde_json::ser::to_string(ser)?)
-    )
+    Ok(HttpResponse::Ok()
+        .content_type("application/json")
+        .body(serde_json::ser::to_string(ser)?))
 }
 
 #[get("/init")]
@@ -78,7 +77,11 @@ async fn get_init(db: Data<DB>) -> Result<HttpResponse, Error> {
         expansions: &'a [Shim<'a>],
     }
 
-    let expansions = db.expansions.iter().map(|xpack| xpack.shim()).collect::<Vec<_>>();
+    let expansions = db
+        .expansions
+        .iter()
+        .map(|xpack| xpack.shim())
+        .collect::<Vec<_>>();
 
     json(&Response {
         expansions: &expansions,
@@ -103,7 +106,8 @@ async fn get_typeahead(query: Path<String>, db: Data<DB>) -> Result<HttpResponse
     let db = &*db;
 
     let response = Response {
-        results: db.search
+        results: db
+            .search
             .find(&query)
             .into_iter()
             .take(10)
@@ -112,24 +116,44 @@ async fn get_typeahead(query: Path<String>, db: Data<DB>) -> Result<HttpResponse
                     EntityId::Champion(id) => {
                         let rune = db.champs.get(id).unwrap();
 
-                        (SearchId::Champion(id), &rune.core.raw.name, Some(rune.core.raw.rarity))
+                        (
+                            SearchId::Champion(id),
+                            &rune.core.raw.name,
+                            Some(rune.core.raw.rarity),
+                        )
                     }
                     EntityId::Spell(id) => {
                         let rune = db.spells.get(id).unwrap();
 
-                        (SearchId::Spell(id), &rune.core.raw.name, Some(rune.core.raw.rarity))
+                        (
+                            SearchId::Spell(id),
+                            &rune.core.raw.name,
+                            Some(rune.core.raw.rarity),
+                        )
                     }
                     EntityId::Equip(id) => {
                         let rune = db.equips.get(id).unwrap();
 
-                        (SearchId::Equip(id), &rune.core.raw.name, Some(rune.core.raw.rarity))
+                        (
+                            SearchId::Equip(id),
+                            &rune.core.raw.name,
+                            Some(rune.core.raw.rarity),
+                        )
                     }
                     EntityId::Relic(id) => {
                         let rune = db.relics.get(id).unwrap();
 
-                        (SearchId::Relic(id), &rune.core.raw.name, Some(rune.core.raw.rarity))
+                        (
+                            SearchId::Relic(id),
+                            &rune.core.raw.name,
+                            Some(rune.core.raw.rarity),
+                        )
                     }
-                    EntityId::AbilityGroup(id) => (SearchId::AbilityGroup(id), &db.ability_groups[id].name, None),
+                    EntityId::AbilityGroup(id) => (
+                        SearchId::AbilityGroup(id),
+                        &db.ability_groups[id].name,
+                        None,
+                    ),
                     EntityId::Effect(id) => {
                         let effect = &db.effects[id];
                         let sid = effect.search_id();
@@ -160,22 +184,28 @@ async fn get_champ(id: Path<Id>, db: Data<DB>) -> Result<HttpResponse, Error> {
         artists: [Shim<'a>; 1],
     }
 
-    let abilities = champ.starting_abilities
+    let abilities = champ
+        .starting_abilities
         .iter()
         .chain(champ.ability_sets[0].iter())
         .chain(champ.ability_sets[1].iter())
         .map(|&id| db.abilities.get(id))
-        .collect::<Option<_>>().ok_or(NotFound)?;
+        .collect::<Option<_>>()
+        .ok_or(NotFound)?;
 
-    let classes = champ.classes
+    let classes = champ
+        .classes
         .iter()
         .map(|&id| db.classes.get(id).map(|class| class.shim()))
-        .collect::<Option<_>>().ok_or(NotFound)?;
+        .collect::<Option<_>>()
+        .ok_or(NotFound)?;
 
-    let races = champ.races
+    let races = champ
+        .races
         .iter()
         .map(|&id| db.races.get(id).map(|race| race.shim()))
-        .collect::<Option<_>>().ok_or(NotFound)?;
+        .collect::<Option<_>>()
+        .ok_or(NotFound)?;
 
     let artists = [db.artists.get(champ.artist).ok_or(NotFound)?.shim()];
 
@@ -255,10 +285,12 @@ async fn get_ability(id: Path<Id>, db: Data<DB>) -> Result<HttpResponse, Error> 
     let db = &*db;
     let group = db.ability_groups.get(*id).ok_or(NotFound)?;
 
-    let abilities = group.ranks
+    let abilities = group
+        .ranks
         .iter()
         .map(|&id| db.abilities.get(id))
-        .collect::<Option<_>>().ok_or(NotFound)?;
+        .collect::<Option<_>>()
+        .ok_or(NotFound)?;
 
     json(&Response {
         ability_groups: [group],
@@ -277,9 +309,7 @@ async fn get_effect(key: Path<String>, db: Data<DB>) -> Result<HttpResponse, Err
     let db = &*db;
     let effect = db.effects.get_by_key(&key).ok_or(NotFound)?;
 
-    json(&Response {
-        effects: [effect],
-    })
+    json(&Response { effects: [effect] })
 }
 
 struct BackgroundServer {
@@ -341,7 +371,10 @@ fn spawn_server(db: DB, socket: SocketAddr) -> BackgroundServer {
 
 #[actix_web::main]
 async fn main() -> anyhow::Result<()> {
-    SimpleLogger::new().with_level(log::LevelFilter::Info).init().expect("Must be able to start a logger");
+    SimpleLogger::new()
+        .with_level(log::LevelFilter::Info)
+        .init()
+        .expect("Must be able to start a logger");
 
     let opts: Opts = Opts::parse();
     let interval = Duration::from_secs(3600 * 6);
